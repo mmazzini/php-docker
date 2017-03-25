@@ -11,6 +11,7 @@ RUN apt-get install -y \
 
 RUN docker-php-ext-install gmp
 RUN docker-php-ext-install curl
+RUN docker-php-ext-install zip
 
 RUN git clone git://github.com/lt/php-curve25519-ext.git
 RUN cd php-curve25519-ext; \
