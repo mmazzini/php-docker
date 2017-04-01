@@ -13,6 +13,11 @@ RUN docker-php-ext-install gmp
 RUN docker-php-ext-install curl
 RUN docker-php-ext-install zip
 
+ENV APCU_VERSION 5.1.8
+RUN pecl install apcu-${APCU_VERSION}
+RUN docker-php-ext-enable --ini-name 20-apcu.ini apcu
+RUN docker-php-ext-enable --ini-name 05-opcache.ini opcache
+
 RUN git clone git://github.com/lt/php-curve25519-ext.git
 RUN cd php-curve25519-ext; \
     phpize; \
@@ -27,7 +32,7 @@ RUN cd php-ed25519-ext; \
     make; \
     make install;
 RUN rm -rf php-ed25519-ext
-ADD jose.ini /usr/local/etc/php/conf.d/
+ADD php.ini /usr/local/etc/php/conf.d/
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 # Install composer
